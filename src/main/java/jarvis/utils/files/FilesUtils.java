@@ -1,10 +1,103 @@
 package jarvis.utils.files;
 
-import javax.swing.JOptionPane;
-import java.io.File;
+import jarvis.utils.date.DateUtils;
+import jarvis.utils.other.CommonUtils;
+import org.apache.commons.lang.StringUtils;
+
+import javax.swing.*;
+import java.io.*;
 import java.util.List;
 
 public class FilesUtils {
+
+
+    public static long copyFile(File file, String destFolder) {
+        long beginDateTime = DateUtils.getCurrTimeInMillisecs();
+        String sourceFileFolderPrefix = file.getAbsolutePath();
+        String destFolderPrefix = destFolder;
+
+        createNewFolder(destFolderPrefix);
+        File[] files = {};
+        if (file.isDirectory()) {
+            files = file.listFiles();
+            for (File f : files) {
+                if (f.isDirectory()) {
+                    String fileSubFolder = StringUtils.removeStart(f.getAbsolutePath(), sourceFileFolderPrefix);
+                    String folder = destFolderPrefix + CommonUtils.getSystemFileSeparator() + fileSubFolder;
+                    createNewFolder(folder);
+                    copyFile(f, folder);
+                } else {
+                    copyStandaloneFile(f, destFolderPrefix);
+                }
+            }
+        } else {
+            copyStandaloneFile(file, destFolder);
+        }
+
+        long endDateTime = DateUtils.getCurrTimeInMillisecs();
+        return endDateTime - beginDateTime;
+    }
+
+    public static long copyStandaloneFile(File file, String destFolder) {
+        long beginDateTime = DateUtils.getCurrTimeInMillisecs();
+        int bytesum = 0;
+        int byteread = 0;
+        InputStream inStream = null;
+        FileOutputStream fs = null;
+        try {
+            //File     oldfile     =     new     File(oldPath);
+            if (file.exists()) {
+                inStream = new FileInputStream(file);
+                String newFileName = destFolder + CommonUtils.getSystemFileSeparator() + file.getName();
+                File newFile = new File(newFileName);
+                if (!newFile.exists()) {
+                    fs = new FileOutputStream(newFileName);
+                    byte[] buffer = new byte[1444];
+                    while ((byteread = inStream.read(buffer)) != -1) {
+                        bytesum += byteread;
+                        System.out.println(bytesum);
+                        fs.write(buffer, 0, byteread);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("error  ");
+            e.printStackTrace();
+        } finally {
+            CommonUtils.releaseResource(null, inStream, fs);
+        }
+        long endDateTime = DateUtils.getCurrTimeInMillisecs();
+        return endDateTime - beginDateTime;
+    }
+
+    public static void createNewFolder(String dest) {
+        File destFolderFile = new File(dest);
+        if (!destFolderFile.exists()) {
+            destFolderFile.mkdir();
+        }
+    }
+
+    public static boolean Move(File srcFile, String destPath) {
+        // Destination directory
+        File dir = new File(destPath);
+        // Move file to new directory
+        boolean success = srcFile.renameTo(new File(dir, srcFile.getName()));
+
+        return success;
+    }
+
+    public static boolean Move(String srcFile, String destPath) {
+        // File (or directory) to be moved
+        File file = new File(srcFile);
+
+        // Destination directory
+        File dir = new File(destPath);
+
+        // Move file to new directory
+        boolean success = file.renameTo(new File(dir, file.getName()));
+
+        return success;
+    }
 
     /**
      * @param args

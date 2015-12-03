@@ -1,4 +1,4 @@
-package utils.mail;
+package jarvis.utils.mail;
 
 import java.util.Iterator;
 import java.util.LinkedList;

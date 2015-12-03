@@ -1,4 +1,4 @@
-package utils;
+package jarvis.utils.date;
 
 import java.security.InvalidParameterException;
 import java.text.ParseException;
@@ -522,4 +522,13 @@ public class DateUtils {
 	public static final String formatDate(Date date) {
 		return getDefaultDateFormat().format(date);
 	}
+
+	public static Date getCurrentDatetime (){
+		Calendar calendar = Calendar.getInstance();
+		return  calendar.getTime();
+	}
+
+    public final static long getCurrTimeInMillisecs() {
+        return System.currentTimeMillis();
+    }
 }

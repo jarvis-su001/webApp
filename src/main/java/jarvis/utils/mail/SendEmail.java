@@ -1,4 +1,4 @@
-package utils.mail;
+package jarvis.utils.mail;
 
 public class SendEmail {
 	public SendEmail() {

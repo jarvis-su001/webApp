@@ -1,4 +1,4 @@
-package utils.mail;
+package jarvis.utils.mail;
 
 import java.io.IOException;
 import java.util.Properties;

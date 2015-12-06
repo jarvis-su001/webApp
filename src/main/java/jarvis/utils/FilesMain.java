@@ -3,6 +3,7 @@ package jarvis.utils;
 import jarvis.utils.files.CopyThread;
 import jarvis.utils.files.FilesUtils;
 
+import javax.swing.*;
 import java.io.File;
 import java.util.List;
 import java.util.Vector;
@@ -20,9 +21,16 @@ public class FilesMain {
     private static String destPath;
     public static void main(String[] args) {
 
-        File file = new File("E:/temp");
-        String dest = "E:/tmp";
-        FilesUtils.copyFile(file, dest);
+        String temp = JOptionPane
+                .showInputDialog("Input Source File Path(like C:\\\\projects) :");
+        String sourcePath = temp;
+        temp = JOptionPane
+                .showInputDialog("Input Target File Path(like C:\\\\projects) :");
+        String destPath = temp;
+
+        File file = new File(sourcePath);
+
+        FilesUtils.copyFile(file, destPath);
     }
 
 

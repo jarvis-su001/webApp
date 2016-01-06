@@ -1,3 +1,4 @@
 #!/bin/sh
-echo "hello "
-
+echo "hello, input your name  "
+read PERSON
+echo "hello, $PERSON"

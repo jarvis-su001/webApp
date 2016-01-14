@@ -34,6 +34,19 @@ public class DataRang {
             Date date6 = sdf.parse(d6);
             Date date7 = sdf.parse(d7);
 
+            l1.add(date2);
+            l1.add(date1);
+
+            l2.add(date4);
+            l2.add(date3);
+            l2.add(date1);
+
+            l3.add(date7);
+            l3.add(date6);
+            l3.add(date4);
+
+
+
             Date payDate = sdf.parse(payDay);
 
             System.out.println(sdf.format(date1));

@@ -46,7 +46,6 @@ public class DataRang {
             l3.add(date4);
 
 
-
             Date payDate = sdf.parse(payDay);
 
             System.out.println(sdf.format(date1));
